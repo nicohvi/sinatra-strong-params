@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Sinatra::StrongParameters do
   before do
     mock_app do
+      set :raise_unpermitted, true
       helpers Sinatra::StrongParameters
   
       get '/root' do
@@ -28,15 +29,22 @@ describe Sinatra::StrongParameters do
     end
   end
 
-  context "root level parameter permit" do
+  context "permitted parameters" do
+
+    it "doesn't allow unpermitted parameters through" do
+      expect { get "/root", { bar: 'bar' } }.to raise_error(Sinatra::StrongParameters::UnpermittedParameters)
+    end
+
     it "allows permitted parameters through" do
       get "/root", { foo: 'foo' }
       expect(last_response).to be_ok 
     end
+  end
 
-    # TODO: Make the error raising depend upon configuration
-    it "doesn't allow unpermitted parameters through" do
-      expect { get "/root", { bar: 'bar' } }.to raise_error(Sinatra::StrongParameters::UnpermittedParameters)
+  context "parameters as arrays" do
+    it "allows parameters as arrays" do
+      get "/root", { foo: ['foo1', 'foo2', 'foo3'] }
+      expect(last_response).to be_ok
     end
   end
 

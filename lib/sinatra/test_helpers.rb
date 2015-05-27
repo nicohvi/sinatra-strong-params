@@ -20,7 +20,7 @@ module Sinatra
     end
 
     def app
-      @app ||= Class.new Sinatra::Base
+      @app ||= Sinatra::Base.new
     end
 
   end
