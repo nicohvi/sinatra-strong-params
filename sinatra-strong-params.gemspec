@@ -14,4 +14,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rspec', '>=3.0.0')
   s.add_development_dependency('guard', '>=2.12.5')
   s.add_development_dependency('guard-rspec', '4.5.0')
+  s.add_development_dependency('simplecov', '0.10.0')
 end
