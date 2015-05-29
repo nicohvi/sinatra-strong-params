@@ -9,7 +9,6 @@ module Sinatra
 
     def mock_app(base = Sinatra::Base, &block)
       @app = Sinatra.new(base) do
-        inner = self
         class_eval(&block)
       end
       app
